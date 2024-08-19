@@ -1,3 +1,5 @@
+// 万能转换器
+
 import {
   basekit,
   FieldType,
@@ -7,79 +9,65 @@ import {
   NumberFormatter,
   AuthorizationType,
 } from '@lark-opdev/block-basekit-server-api';
+
+import Conversion from './utils/fnMap';
+
 const { t } = field;
 
 // 通过addDomainList添加请求接口的域名
 basekit.addDomainList(['api.exchangerate-api.com']);
+
+const fnMap = {
+  1: 'BinaryToDecimal',
+  2: 'BinaryToHexadecimal',
+  3: 'DecimalToBinary',
+  4: 'DecimalToHexadecimal',
+  5: 'HexadecimalToBinary',
+  6: 'HexadecimalToDecimal',
+  7: 'RGBToHEX',
+  8: 'HEXToRGB',
+};
 
 basekit.addField({
   // 定义捷径的i18n语言资源
   i18n: {
     messages: {
       'zh-CN': {
-        sourceType: '源进制类型',
-        targetType: '目标进制类型',
         source: '源字段',
-        2: '二进制',
-        8: '八进制',
-        10: '十进制',
-        16: '十六进制',
-        invalid: '无效的转换类型',
       },
       'en-US': {
-        sourceType: 'Source Type',
-        targetType: 'Target Type',
         source: 'Source Field',
-        2: 'Binary',
-        8: 'Octal',
-        10: 'Decimal',
-        16: 'Hexadecimal',
-        invalid: 'Invalid Conversion Type',
       },
       'ja-JP': {
-        sourceType: '元進数タイプ',
-        targetType: '目標進数タイプ',
         source: '元フィールド',
-        2: '二進数',
-        8: '八進数',
-        10: '十進数',
-        16: '十六進数',
-        invalid: '無効な変換タイプ',
       },
     },
   },
   // 定义捷径的入参
   formItems: [
     {
-      key: 'sourceType',
-      label: t('sourceType'),
+      key: 'changeType',
+      label: '预置转换类型',
       component: FieldComponent.SingleSelect,
       props: {
         options: [
-          { label: t('2'), value: '2' },
-          { label: t('8'), value: '8' },
-          { label: t('10'), value: '10' },
-          { label: t('16'), value: '16' },
+          { label: '二进制转十进制', value: 1 },
+          { label: '二进制转十六进制', value: 2 },
+          { label: '十进制转二进制', value: 3 },
+          { label: '十进制转十六进制', value: 4 },
+          { label: '十六进制转二进制', value: 5 },
+          { label: '十六进制转十进制', value: 6 },
+          { label: 'RGB 转 HEX', value: 7 },
+          { label: 'HEX 转 RGB', value: 8 },
         ],
-      },
-      validator: {
-        required: true,
       },
     },
     {
-      key: 'targetType',
-      label: t('targetType'),
-      component: FieldComponent.SingleSelect,
+      key: 'fun',
+      label: '自定义转换函数',
+      component: FieldComponent.Input,
       props: {
-        options: [
-          { label: t('2'), value: '2' },
-          { label: t('8'), value: '8' },
-          { label: t('10'), value: '10' },
-          { label: t('16'), value: '16' },
-        ],
-      },
-      validator: {
-        required: true,
+        placeholder: '请填入函数具体内容（javascript 语言）',
       },
     },
     {
@@ -87,8 +75,7 @@ basekit.addField({
       label: t('source'),
       component: FieldComponent.FieldSelect,
       props: {
-        // supportType: [FieldType.Number, FieldType.Text],
-        supportType: [FieldType.Number],
+        supportType: [FieldType.Number, FieldType.Text, FieldType.DateTime],
       },
       validator: {
         required: true,
@@ -100,75 +87,24 @@ basekit.addField({
     type: FieldType.Text,
   },
   // formItemParams 为运行时传入的字段参数，对应字段配置里的 formItems （如引用的依赖字段）
-  execute: async (formItemParams: {
-    sourceType: { text: string; value: string };
-    targetType: { text: string; value: string };
-    source: { type: string; text: string }[] | number;
-  }) => {
-    const { sourceType, targetType, source } = formItemParams;
+  execute: async (formItemParams: { changeType: any; source: { type: string; text: string }[] | number; fun: any }) => {
+    const { source, fun, changeType } = formItemParams;
+
+    console.log('tttt', Conversion['bab'], changeType, fnMap[changeType.value], Conversion[fnMap[changeType.value]]);
 
     // 数字类型 source 直接为值
     //  文本类型 source 为 [{ type: 'text , text '8'}]
     const sourceValue = Array.isArray(source) && source.length > 0 ? source[0].text : source;
 
-    function convertNumber(sourceType, targetType, input) {
-      const type = sourceType.value + 'To' + targetType.value;
-      let decimal;
+    let targetValueFun = new Function('return ' + fun)();
 
-      switch (type) {
-        case '2To10': // 二进制转十进制
-          return parseInt(input, 2);
-
-        case '2To8': // 二进制转八进制
-          decimal = parseInt(input, 2);
-          return decimal.toString(8);
-
-        case '2To16': // 二进制转十六进制
-          decimal = parseInt(input, 2);
-          return decimal.toString(16).toUpperCase();
-
-        case '8To2': // 八进制转二进制
-          decimal = parseInt(input, 8);
-          return decimal.toString(2);
-
-        case '8To10': // 八进制转十进制
-          return parseInt(input, 8);
-
-        case '8To16': // 八进制转十六进制
-          decimal = parseInt(input, 8);
-          return decimal.toString(16).toUpperCase();
-
-        case '10To2': // 十进制转二进制
-          return Number(input).toString(2);
-
-        case '10To8': // 十进制转八进制
-          return Number(input).toString(8);
-
-        case '10To16': // 十进制转十六进制
-          return Number(input).toString(16).toUpperCase();
-
-        case '16To2': // 十六进制转二进制
-          decimal = parseInt(input, 16);
-          return decimal.toString(2);
-
-        case '16To8': // 十六进制转八进制
-          decimal = parseInt(input, 16);
-          return decimal.toString(8);
-
-        case '16To10': // 十六进制转十进制
-          return parseInt(input, 16);
-
-        default:
-          return t('invalid');
-      }
-    }
-
-    let targetValue = convertNumber(sourceType, targetType, sourceValue);
+    // 选了预置转换类型，则以预置转换类型为准
+    let targetValue = changeType ? Conversion[fnMap[changeType.value]](sourceValue) : targetValueFun(sourceValue);
 
     try {
       return {
         code: FieldCode.Success,
-        data: targetValue.toLowerCase(),
+        data: targetValue,
       };
     } catch (e) {
       return {
