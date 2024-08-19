@@ -36,12 +36,51 @@ basekit.addField({
     messages: {
       'zh-CN': {
         source: '源字段',
+        changeType: '预置转换类型（主要）',
+        fun: '自定义转换函数',
+        placeholder: '请填入具体的转换函数（仅支持 javascript 语言）',
+        1: '二进制 -> 十进制',
+        2: '二进制 -> 十六进制',
+        3: '十进制 -> 二进制',
+        4: '十进制 -> 十六进制',
+        5: '十六进制 -> 二进制',
+        6: '十六进制 -> 十进制',
+        7: 'RGB -> HEX',
+        8: 'HEX -> RGB',
+        9: '千克 -> 磅',
+        10: '磅 -> 千克',
       },
       'en-US': {
         source: 'Source Field',
+        changeType: 'Preset Conversion Type (Primary)',
+        fun: 'Custom Conversion Function',
+        placeholder: 'Please enter the specific conversion function (JavaScript language only)',
+        1: 'Binary -> Decimal',
+        2: 'Binary -> Hexadecimal',
+        3: 'Decimal -> Binary',
+        4: 'Decimal -> Hexadecimal',
+        5: 'Hexadecimal -> Binary',
+        6: 'Hexadecimal -> Decimal',
+        7: 'RGB -> HEX',
+        8: 'HEX -> RGB',
+        9: 'Kilograms -> Pounds',
+        10: 'Pounds -> Kilograms',
       },
       'ja-JP': {
         source: '元フィールド',
+        changeType: 'プリセット変換タイプ（主要）',
+        fun: 'カスタム変換関数',
+        placeholder: '具体的な変換関数を入力してください（JavaScriptのみ対応）',
+        1: 'バイナリ -> 十進法',
+        2: 'バイナリ -> 十六進法',
+        3: '十進法 -> バイナリ',
+        4: '十進法 -> 十六進法',
+        5: '十六進法 -> バイナリ',
+        6: '十六進法 -> 十進法',
+        7: 'RGB -> HEX',
+        8: 'HEX -> RGB',
+        9: 'キログラム -> ポンド',
+        10: 'ポンド -> キログラム',
       },
     },
   },
@@ -49,29 +88,29 @@ basekit.addField({
   formItems: [
     {
       key: 'changeType',
-      label: '预置转换类型',
+      label: t('changeType'),
       component: FieldComponent.SingleSelect,
       props: {
         options: [
-          { label: '二进制 -> 十进制', value: 1 },
-          { label: '二进制 -> 十六进制', value: 2 },
-          { label: '十进制 -> 二进制', value: 3 },
-          { label: '十进制 -> 十六进制', value: 4 },
-          { label: '十六进制 -> 二进制', value: 5 },
-          { label: '十六进制 -> 十进制', value: 6 },
-          { label: 'RGB -> HEX', value: 7 },
-          { label: 'HEX -> RGB', value: 8 },
-          { label: '千克 -> 磅', value: 9 },
-          { label: '磅 -> 千克', value: 10 },
+          { label: t('1'), value: 1 },
+          { label: t('2'), value: 2 },
+          { label: t('3'), value: 3 },
+          { label: t('4'), value: 4 },
+          { label: t('5'), value: 5 },
+          { label: t('6'), value: 6 },
+          { label: t('7'), value: 7 },
+          { label: t('8'), value: 8 },
+          { label: t('9'), value: 9 },
+          { label: t('10'), value: 10 },
         ],
       },
     },
     {
       key: 'fun',
-      label: '自定义转换函数',
+      label: t('fun'),
       component: FieldComponent.Input,
       props: {
-        placeholder: '请填入函数具体内容（javascript 语言）',
+        placeholder: t('placeholder'),
       },
     },
     {
@@ -93,8 +132,6 @@ basekit.addField({
   // formItemParams 为运行时传入的字段参数，对应字段配置里的 formItems （如引用的依赖字段）
   execute: async (formItemParams: { changeType: any; source: { type: string; text: string }[] | number; fun: any }) => {
     const { source, fun, changeType } = formItemParams;
-
-    console.log('tttt', Conversion['bab'], changeType, fnMap[changeType.value], Conversion[fnMap[changeType.value]]);
 
     // 数字类型 source 直接为值
     //  文本类型 source 为 [{ type: 'text , text '8'}]
