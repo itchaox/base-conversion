@@ -26,6 +26,8 @@ const fnMap = {
   6: 'HexadecimalToDecimal',
   7: 'RGBToHEX',
   8: 'HEXToRGB',
+  9: 'KGToLB',
+  10: 'LBToKG',
 };
 
 basekit.addField({
@@ -51,14 +53,16 @@ basekit.addField({
       component: FieldComponent.SingleSelect,
       props: {
         options: [
-          { label: '二进制转十进制', value: 1 },
-          { label: '二进制转十六进制', value: 2 },
-          { label: '十进制转二进制', value: 3 },
-          { label: '十进制转十六进制', value: 4 },
-          { label: '十六进制转二进制', value: 5 },
-          { label: '十六进制转十进制', value: 6 },
-          { label: 'RGB 转 HEX', value: 7 },
-          { label: 'HEX 转 RGB', value: 8 },
+          { label: '二进制 -> 十进制', value: 1 },
+          { label: '二进制 -> 十六进制', value: 2 },
+          { label: '十进制 -> 二进制', value: 3 },
+          { label: '十进制 -> 十六进制', value: 4 },
+          { label: '十六进制 -> 二进制', value: 5 },
+          { label: '十六进制 -> 十进制', value: 6 },
+          { label: 'RGB -> HEX', value: 7 },
+          { label: 'HEX -> RGB', value: 8 },
+          { label: '千克 -> 磅', value: 9 },
+          { label: '磅 -> 千克', value: 10 },
         ],
       },
     },

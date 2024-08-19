@@ -3,7 +3,7 @@
  * @Author     : Wang Chao
  * @Date       : 2024-08-19 21:34
  * @LastAuthor : Wang Chao
- * @LastTime   : 2024-08-19 22:33
+ * @LastTime   : 2024-08-19 22:44
  * @desc       :
  */
 
@@ -60,6 +60,16 @@ const Conversion = {
 
     // 返回 RGB 字符串
     return `${r},${g},${b}`;
+  },
+
+  KGToLB: (kilograms) => {
+    const poundsPerKilogram = 2.20462; // 1 kg ≈ 2.20462 lb
+    return kilograms * poundsPerKilogram;
+  },
+
+  LBToKG: (pounds) => {
+    const kilogramsPerPound = 0.453592; // 1 lb ≈ 0.453592 kg
+    return pounds * kilogramsPerPound;
   },
 };
 
