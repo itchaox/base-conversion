@@ -10,7 +10,7 @@ import {
   AuthorizationType,
 } from '@lark-opdev/block-basekit-server-api';
 
-import Conversion from './utils/fnMap';
+const Conversion = require('./utils/fnMap');
 
 const { t } = field;
 

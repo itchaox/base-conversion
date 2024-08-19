@@ -3,7 +3,7 @@
  * @Author     : Wang Chao
  * @Date       : 2024-08-19 21:34
  * @LastAuthor : Wang Chao
- * @LastTime   : 2024-08-19 22:44
+ * @LastTime   : 2024-08-20 00:59
  * @desc       :
  */
 
@@ -73,4 +73,4 @@ const Conversion = {
   },
 };
 
-export default Conversion;
+module.exports = Conversion;
