@@ -26,8 +26,6 @@ const fnMap = {
   6: 'HexadecimalToDecimal',
   7: 'RGBToHEX',
   8: 'HEXToRGB',
-  9: 'KGToLB',
-  10: 'LBToKG',
 };
 
 basekit.addField({
@@ -35,7 +33,7 @@ basekit.addField({
   i18n: {
     messages: {
       'zh-CN': {
-        source: '源字段',
+        source: '选择待转换的字段',
         changeType: '预置转换类型（主要）',
         fun: '自定义转换函数',
         placeholder: '请填入具体的转换函数（仅支持 javascript 语言）',
@@ -47,11 +45,10 @@ basekit.addField({
         6: '十六进制 -> 十进制',
         7: 'RGB -> HEX',
         8: 'HEX -> RGB',
-        9: '千克 -> 磅',
-        10: '磅 -> 千克',
+        p1: '请选择文本或数字类型字段',
       },
       'en-US': {
-        source: 'Source Field',
+        source: 'Select the field to convert',
         changeType: 'Preset Conversion Type (Primary)',
         fun: 'Custom Conversion Function',
         placeholder: 'Please enter the specific conversion function (JavaScript language only)',
@@ -63,11 +60,10 @@ basekit.addField({
         6: 'Hexadecimal -> Decimal',
         7: 'RGB -> HEX',
         8: 'HEX -> RGB',
-        9: 'Kilograms -> Pounds',
-        10: 'Pounds -> Kilograms',
+        p1: 'Please select a text or numeric field.',
       },
       'ja-JP': {
-        source: '元フィールド',
+        source: '変換するフィールドを選択',
         changeType: 'プリセット変換タイプ（主要）',
         fun: 'カスタム変換関数',
         placeholder: '具体的な変換関数を入力してください（JavaScriptのみ対応）',
@@ -79,13 +75,24 @@ basekit.addField({
         6: '十六進法 -> 十進法',
         7: 'RGB -> HEX',
         8: 'HEX -> RGB',
-        9: 'キログラム -> ポンド',
-        10: 'ポンド -> キログラム',
+        p1: 'テキストまたは数値型のフィールドを選択してください。',
       },
     },
   },
   // 定义捷径的入参
   formItems: [
+    {
+      key: 'source',
+      label: t('source'),
+      component: FieldComponent.FieldSelect,
+      props: {
+        supportType: [FieldType.Number, FieldType.Text],
+        placeholder: t('p1'),
+      },
+      validator: {
+        required: true,
+      },
+    },
     {
       key: 'changeType',
       label: t('changeType'),
@@ -100,8 +107,6 @@ basekit.addField({
           { label: t('6'), value: 6 },
           { label: t('7'), value: 7 },
           { label: t('8'), value: 8 },
-          { label: t('9'), value: 9 },
-          { label: t('10'), value: 10 },
         ],
       },
     },
@@ -111,17 +116,6 @@ basekit.addField({
       component: FieldComponent.Input,
       props: {
         placeholder: t('placeholder'),
-      },
-    },
-    {
-      key: 'source',
-      label: t('source'),
-      component: FieldComponent.FieldSelect,
-      props: {
-        supportType: [FieldType.Number, FieldType.Text, FieldType.DateTime],
-      },
-      validator: {
-        required: true,
       },
     },
   ],
