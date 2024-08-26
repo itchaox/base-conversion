@@ -29,6 +29,7 @@ basekit.addField({
         changeType: '预置转换类型',
         fun: '自定义转换函数',
         placeholder: '请填写具体的 JavaScript 转换函数',
+        p1: '请选择文本或数字类型字段',
         0: '自定义转换函数',
         1: '二进制 -> 十进制',
         2: '二进制 -> 十六进制',
@@ -38,13 +39,16 @@ basekit.addField({
         6: '十六进制 -> 十进制',
         7: 'RGB -> HEX',
         8: 'HEX -> RGB',
-        p1: '请选择文本或数字类型字段',
+        9: '当未选择『自定义转换函数』时，将使用所选的预置转换类型进行转换。',
+        10: '更多详情，请参考',
+        11: ' 使用文档',
       },
       'en-US': {
         source: 'Select the field to convert',
         changeType: 'Preset Conversion Type',
         fun: 'Custom Conversion Function',
         placeholder: 'Please provide the specific JavaScript conversion function.',
+        p1: 'Please select a text or numeric field.',
         0: 'Custom conversion function',
         1: 'Binary -> Decimal',
         2: 'Binary -> Hexadecimal',
@@ -54,13 +58,16 @@ basekit.addField({
         6: 'Hexadecimal -> Decimal',
         7: 'RGB -> HEX',
         8: 'HEX -> RGB',
-        p1: 'Please select a text or numeric field.',
+        9: 'If the “Custom conversion function” option is not selected, the conversion will use the chosen preset conversion type.',
+        10: 'For more details, please refer to',
+        11: ' User documentation',
       },
       'ja-JP': {
         source: '変換するフィールドを選択',
         changeType: 'プリセット変換タイプ',
         fun: 'カスタム変換関数',
         placeholder: '具体的なJavaScript変換関数を記入してください。',
+        p1: 'テキストまたは数値型のフィールドを選択してください。',
         0: 'カスタム変換関数',
         1: 'バイナリ -> 十進法',
         2: 'バイナリ -> 十六進法',
@@ -70,7 +77,9 @@ basekit.addField({
         6: '十六進法 -> 十進法',
         7: 'RGB -> HEX',
         8: 'HEX -> RGB',
-        p1: 'テキストまたは数値型のフィールドを選択してください。',
+        9: '「カスタム変換関数」が選択されていない場合は、選択したプリセット変換タイプを使用して変換を行います。',
+        10: '詳細については、参照してください',
+        11: ' 使用文書',
       },
     },
   },
@@ -95,7 +104,7 @@ basekit.addField({
       tooltips: [
         {
           type: 'text',
-          content: '当选择了非自定义转换函数的选项时，则以选择的预置转换类型为准进行转换。',
+          content: t('9'),
         },
       ],
       props: {
@@ -111,7 +120,6 @@ basekit.addField({
           { label: t('8'), value: 8 },
         ],
       },
-      defaultValue: 0,
       validator: {
         required: true,
       },
@@ -126,11 +134,11 @@ basekit.addField({
       tooltips: [
         {
           type: 'text',
-          content: '更多详情，请参考',
+          content: t('10'),
         },
         {
           type: 'link',
-          text: ' 使用文档',
+          text: t('11'),
           link: 'https://bcmcjimpjd.feishu.cn/base/I7AWbeSTLafqaJsTJ4BcmCF2nMg?table=ldxyob7oZYiCcGzh',
         },
       ],
@@ -148,7 +156,7 @@ basekit.addField({
     //  文本类型 source 为 [{ type: 'text , text '8'}]
     const sourceValue = Array.isArray(source) && source.length > 0 ? source[0].text : source;
 
-    let targetValueFun = '';
+    let targetValueFun: any = '';
     if (changeType.value === 0) {
       targetValueFun = new Function('return ' + fun)();
     }
