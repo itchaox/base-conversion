@@ -1,14 +1,6 @@
-// 万能转换器
+// FIXME 万能转换器
 
-import {
-  basekit,
-  FieldType,
-  field,
-  FieldComponent,
-  FieldCode,
-  NumberFormatter,
-  AuthorizationType,
-} from '@lark-opdev/block-basekit-server-api';
+import { basekit, FieldType, field, FieldComponent, FieldCode } from '@lark-opdev/block-basekit-server-api';
 
 const Conversion = require('./utils/fnMap');
 
@@ -34,9 +26,10 @@ basekit.addField({
     messages: {
       'zh-CN': {
         source: '选择待转换的字段',
-        changeType: '预置转换类型（主要）',
+        changeType: '预置转换类型',
         fun: '自定义转换函数',
-        placeholder: '请填入具体的转换函数（仅支持 javascript 语言）',
+        placeholder: '请填写具体的 JavaScript 转换函数',
+        0: '自定义转换函数',
         1: '二进制 -> 十进制',
         2: '二进制 -> 十六进制',
         3: '十进制 -> 二进制',
@@ -49,9 +42,10 @@ basekit.addField({
       },
       'en-US': {
         source: 'Select the field to convert',
-        changeType: 'Preset Conversion Type (Primary)',
+        changeType: 'Preset Conversion Type',
         fun: 'Custom Conversion Function',
-        placeholder: 'Please enter the specific conversion function (JavaScript language only)',
+        placeholder: 'Please provide the specific JavaScript conversion function.',
+        0: 'Custom conversion function',
         1: 'Binary -> Decimal',
         2: 'Binary -> Hexadecimal',
         3: 'Decimal -> Binary',
@@ -64,9 +58,10 @@ basekit.addField({
       },
       'ja-JP': {
         source: '変換するフィールドを選択',
-        changeType: 'プリセット変換タイプ（主要）',
+        changeType: 'プリセット変換タイプ',
         fun: 'カスタム変換関数',
-        placeholder: '具体的な変換関数を入力してください（JavaScriptのみ対応）',
+        placeholder: '具体的なJavaScript変換関数を記入してください。',
+        0: 'カスタム変換関数',
         1: 'バイナリ -> 十進法',
         2: 'バイナリ -> 十六進法',
         3: '十進法 -> バイナリ',
@@ -97,8 +92,15 @@ basekit.addField({
       key: 'changeType',
       label: t('changeType'),
       component: FieldComponent.SingleSelect,
+      tooltips: [
+        {
+          type: 'text',
+          content: '当选择了非自定义转换函数的选项时，则以选择的预置转换类型为准进行转换。',
+        },
+      ],
       props: {
         options: [
+          { label: t('0'), value: 0 },
           { label: t('1'), value: 1 },
           { label: t('2'), value: 2 },
           { label: t('3'), value: 3 },
@@ -109,6 +111,10 @@ basekit.addField({
           { label: t('8'), value: 8 },
         ],
       },
+      defaultValue: 0,
+      validator: {
+        required: true,
+      },
     },
     {
       key: 'fun',
@@ -117,6 +123,17 @@ basekit.addField({
       props: {
         placeholder: t('placeholder'),
       },
+      tooltips: [
+        {
+          type: 'text',
+          content: '更多详情，请参考',
+        },
+        {
+          type: 'link',
+          text: ' 使用文档',
+          link: 'https://bcmcjimpjd.feishu.cn/base/I7AWbeSTLafqaJsTJ4BcmCF2nMg?table=ldxyob7oZYiCcGzh',
+        },
+      ],
     },
   ],
   // 定义捷径的返回结果类型
@@ -131,10 +148,14 @@ basekit.addField({
     //  文本类型 source 为 [{ type: 'text , text '8'}]
     const sourceValue = Array.isArray(source) && source.length > 0 ? source[0].text : source;
 
-    let targetValueFun = new Function('return ' + fun)();
+    let targetValueFun = '';
+    if (changeType.value === 0) {
+      targetValueFun = new Function('return ' + fun)();
+    }
 
     // 选了预置转换类型，则以预置转换类型为准
-    let targetValue = changeType ? Conversion[fnMap[changeType.value]](sourceValue) : targetValueFun(sourceValue);
+    let targetValue =
+      changeType.value !== 0 ? Conversion[fnMap[changeType.value]](sourceValue) : targetValueFun(sourceValue);
 
     try {
       return {
