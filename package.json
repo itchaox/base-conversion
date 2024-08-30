@@ -15,7 +15,6 @@
     "@lark-opdev/block-basekit-cli": "1.0.4-alpha.19"
   },
   "dependencies": {
-    "@lark-opdev/block-basekit-server-api": "1.0.4-alpha.19",
-    "iconv-lite": "^0.6.3"
+    "@lark-opdev/block-basekit-server-api": "1.0.4-alpha.19"
   }
 }
