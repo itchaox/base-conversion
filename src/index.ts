@@ -162,13 +162,20 @@ basekit.addField({
     }
 
     // 选了预置转换类型，则以预置转换类型为准
-    let targetValue =
-      changeType.value !== 0 ? Conversion[fnMap[changeType.value]](sourceValue) : targetValueFun(sourceValue);
+    let targetValue = '';
+
+    if (changeType.value !== 0) {
+      targetValue = Conversion[fnMap[changeType.value]](sourceValue);
+    } else {
+      if (typeof targetValueFun === 'function') {
+        targetValue = targetValueFun(sourceValue);
+      }
+    }
 
     try {
       return {
         code: FieldCode.Success,
-        data: targetValue,
+        data: String(targetValue),
       };
     } catch (e) {
       return {
