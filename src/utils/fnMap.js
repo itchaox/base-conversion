@@ -3,7 +3,7 @@
  * @Author     : Wang Chao
  * @Date       : 2024-08-19 21:34
  * @LastAuthor : Wang Chao
- * @LastTime   : 2024-08-21 13:07
+ * @LastTime   : 2024-11-14 13:45
  * @desc       :
  */
 
@@ -60,6 +60,37 @@ const Conversion = {
 
     // 返回 RGB 字符串
     return `${r},${g},${b}`;
+  },
+
+  // 秒转年月日时间
+  SecondToTime: (timestampInSeconds) => {
+    // 将秒级时间戳转换为毫秒级时间戳
+    const date = new Date(timestampInSeconds * 1000);
+
+    // 获取年、月、日、小时和分钟
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从0开始，所以加1
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    // 组合成 "YYYY/MM/DD HH:mm" 格式
+    return `${year}/${month}/${day} ${hours}:${minutes}`;
+  },
+
+  // 毫秒转年月日时间
+  MillisecondToTime: (timestampInMilliseconds) => {
+    const date = new Date(Number(timestampInMilliseconds));
+
+    // 获取年、月、日、小时和分钟
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份从0开始，所以加1
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    // 组合成 "YYYY/MM/DD HH:mm" 格式
+    return `${year}/${month}/${day} ${hours}:${minutes}`;
   },
 };
 

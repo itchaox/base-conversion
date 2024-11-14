@@ -18,6 +18,8 @@ const fnMap = {
   6: 'HexadecimalToDecimal',
   7: 'RGBToHEX',
   8: 'HEXToRGB',
+  9: 'SecondToTime',
+  10: 'MillisecondToTime',
 };
 
 basekit.addField({
@@ -42,6 +44,8 @@ basekit.addField({
         9: '当未选择『自定义转换函数』时，将使用所选的预置转换类型进行转换。',
         10: '更多详情，请参考',
         11: ' 使用文档',
+        12: '秒 -> 年/月/日 时:分',
+        13: '毫秒 -> 年/月/日 时:分',
       },
       'en-US': {
         source: 'Select the field to convert',
@@ -61,6 +65,8 @@ basekit.addField({
         9: 'If the “Custom conversion function” option is not selected, the conversion will use the chosen preset conversion type.',
         10: 'For more details, please refer to',
         11: ' User documentation',
+        12: 'Seconds -> YYYY/MM/DD HH:mm',
+        13: 'Milliseconds -> YYYY/MM/DD HH:mm',
       },
       'ja-JP': {
         source: '変換するフィールドを選択',
@@ -80,6 +86,8 @@ basekit.addField({
         9: '「カスタム変換関数」が選択されていない場合は、選択したプリセット変換タイプを使用して変換を行います。',
         10: '詳細については、参照してください',
         11: ' 使用文書',
+        12: '秒 -> 年/月/日 時:分',
+        13: 'ミリ秒 -> 年/月/日 時:分',
       },
     },
   },
@@ -118,6 +126,8 @@ basekit.addField({
           { label: t('6'), value: 6 },
           { label: t('7'), value: 7 },
           { label: t('8'), value: 8 },
+          { label: t('12'), value: 9 },
+          { label: t('13'), value: 10 },
         ],
       },
       validator: {
