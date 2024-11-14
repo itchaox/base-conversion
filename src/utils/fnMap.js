@@ -3,9 +3,11 @@
  * @Author     : Wang Chao
  * @Date       : 2024-08-19 21:34
  * @LastAuthor : Wang Chao
- * @LastTime   : 2024-11-14 13:45
+ * @LastTime   : 2024-11-15 00:43
  * @desc       :
  */
+
+const crypto = require('crypto');
 
 const Conversion = {
   // 二进制转十进制
@@ -91,6 +93,21 @@ const Conversion = {
 
     // 组合成 "YYYY/MM/DD HH:mm" 格式
     return `${year}/${month}/${day} ${hours}:${minutes}`;
+  },
+
+  // MD5
+  MD5: (data) => {
+    return crypto.createHash('md5').update(data).digest('hex');
+  },
+
+  // SHA-256
+  SHA256: (data) => {
+    return crypto.createHash('sha256').update(data).digest('hex');
+  },
+
+  // SHA-1
+  SHA1: (data) => {
+    return crypto.createHash('sha1').update(data).digest('hex');
   },
 };
 

@@ -18,8 +18,11 @@ const fnMap = {
   6: 'HexadecimalToDecimal',
   7: 'RGBToHEX',
   8: 'HEXToRGB',
-  9: 'SecondToTime',
-  10: 'MillisecondToTime',
+  12: 'SecondToTime',
+  13: 'MillisecondToTime',
+  14: 'MD5',
+  15: 'SHA256',
+  16: 'SHA1',
 };
 
 basekit.addField({
@@ -46,6 +49,9 @@ basekit.addField({
         11: ' 使用文档',
         12: '时间戳（秒） -> 年/月/日 时:分',
         13: '时间戳（毫秒） -> 年/月/日 时:分',
+        14: 'MD5',
+        15: 'SHA256',
+        16: 'SHA1',
       },
       'en-US': {
         source: 'Select the field to convert',
@@ -67,6 +73,9 @@ basekit.addField({
         11: ' User documentation',
         12: 'Timestamp (seconds) -> YYYY/MM/DD HH:mm',
         13: 'Timestamp (milliseconds) -> YYYY/MM/DD HH:mm',
+        14: 'MD5',
+        15: 'SHA256',
+        16: 'SHA1',
       },
       'ja-JP': {
         source: '変換するフィールドを選択',
@@ -88,6 +97,9 @@ basekit.addField({
         11: ' 使用文書',
         12: 'タイムスタンプ（秒） -> 年/月/日 時:分',
         13: 'タイムスタンプ（ミリ秒） -> 年/月/日 時:分',
+        14: 'MD5',
+        15: 'SHA256',
+        16: 'SHA1',
       },
     },
   },
@@ -126,8 +138,11 @@ basekit.addField({
           { label: t('6'), value: 6 },
           { label: t('7'), value: 7 },
           { label: t('8'), value: 8 },
-          { label: t('12'), value: 9 },
-          { label: t('13'), value: 10 },
+          { label: t('12'), value: 12 },
+          { label: t('13'), value: 13 },
+          { label: t('14'), value: 14 },
+          { label: t('15'), value: 15 },
+          { label: t('16'), value: 16 },
         ],
       },
       validator: {
