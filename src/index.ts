@@ -23,6 +23,7 @@ const fnMap = {
   14: 'MD5',
   15: 'SHA256',
   16: 'SHA1',
+  17: 'DateToTimestamp',
 };
 
 basekit.addField({
@@ -52,6 +53,7 @@ basekit.addField({
         14: 'MD5',
         15: 'SHA256',
         16: 'SHA1',
+        17: '任意日期格式 -> 时间戳(毫秒)',
       },
       'en-US': {
         source: 'Select the field to convert',
@@ -76,6 +78,7 @@ basekit.addField({
         14: 'MD5',
         15: 'SHA256',
         16: 'SHA1',
+        17: 'Any date format -> timestamp (milliseconds)',
       },
       'ja-JP': {
         source: '変換するフィールドを選択',
@@ -100,6 +103,7 @@ basekit.addField({
         14: 'MD5',
         15: 'SHA256',
         16: 'SHA1',
+        17: '任意の日付形式 -> タイムスタンプ (ミリ秒)',
       },
     },
   },
@@ -110,7 +114,7 @@ basekit.addField({
       label: t('source'),
       component: FieldComponent.FieldSelect,
       props: {
-        supportType: [FieldType.Number, FieldType.Text],
+        supportType: [FieldType.Number, FieldType.Text, FieldType.DateTime],
         placeholder: t('p1'),
       },
       validator: {
@@ -143,6 +147,7 @@ basekit.addField({
           { label: t('14'), value: 14 },
           { label: t('15'), value: 15 },
           { label: t('16'), value: 16 },
+          { label: t('17'), value: 17 },
         ],
       },
       validator: {
@@ -176,6 +181,7 @@ basekit.addField({
   // formItemParams 为运行时传入的字段参数，对应字段配置里的 formItems （如引用的依赖字段）
   execute: async (formItemParams: { changeType: any; source: { type: string; text: string }[] | number; fun: any }) => {
     const { source, fun, changeType } = formItemParams;
+    console.log('🚀 source:', source, Conversion, fnMap[changeType.value]);
 
     // 数字类型 source 直接为值
     //  文本类型 source 为 [{ type: 'text , text '8'}]

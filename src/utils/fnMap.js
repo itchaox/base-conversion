@@ -3,7 +3,7 @@
  * @Author     : Wang Chao
  * @Date       : 2024-08-19 21:34
  * @LastAuthor : Wang Chao
- * @LastTime   : 2024-11-15 00:43
+ * @LastTime   : 2025-02-26 00:02
  * @desc       :
  */
 
@@ -108,6 +108,11 @@ const Conversion = {
   // SHA-1
   SHA1: (data) => {
     return crypto.createHash('sha1').update(data).digest('hex');
+  },
+
+  // 任意时间格式 -> 时间戳(毫秒)
+  DateToTimestamp: (data) => {
+    return data;
   },
 };
 
