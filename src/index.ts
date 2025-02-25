@@ -187,7 +187,7 @@ basekit.addField({
   execute: async (formItemParams: { changeType: any; source: { type: string; text: string }[] | number; fun: any }) => {
     const { source, fun, changeType } = formItemParams;
 
-    // 数字类型 source 直接为值
+    // 数字和日期类型 source 直接为值
     //  文本类型 source 为 [{ type: 'text , text '8'}]
     const sourceValue = Array.isArray(source) && source.length > 0 ? source[0].text : source;
 
