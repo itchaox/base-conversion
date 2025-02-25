@@ -24,6 +24,7 @@ const fnMap = {
   15: 'SHA256',
   16: 'SHA1',
   17: 'DateToTimestamp',
+  18: 'DateToSecond',
 };
 
 basekit.addField({
@@ -54,6 +55,7 @@ basekit.addField({
         15: 'SHA256',
         16: 'SHA1',
         17: '任意日期格式 -> 时间戳(毫秒)',
+        18: '任意日期格式 -> 时间戳(秒)',
       },
       'en-US': {
         source: 'Select the field to convert',
@@ -79,6 +81,7 @@ basekit.addField({
         15: 'SHA256',
         16: 'SHA1',
         17: 'Any date format -> timestamp (milliseconds)',
+        18: 'Any date format -> timestamp (seconds)',
       },
       'ja-JP': {
         source: '変換するフィールドを選択',
@@ -104,6 +107,7 @@ basekit.addField({
         15: 'SHA256',
         16: 'SHA1',
         17: '任意の日付形式 -> タイムスタンプ (ミリ秒)',
+        18: '任意の日付形式 -> タイムスタンプ (秒)',
       },
     },
   },
@@ -148,6 +152,7 @@ basekit.addField({
           { label: t('15'), value: 15 },
           { label: t('16'), value: 16 },
           { label: t('17'), value: 17 },
+          { label: t('18'), value: 18 },
         ],
       },
       validator: {
@@ -181,7 +186,6 @@ basekit.addField({
   // formItemParams 为运行时传入的字段参数，对应字段配置里的 formItems （如引用的依赖字段）
   execute: async (formItemParams: { changeType: any; source: { type: string; text: string }[] | number; fun: any }) => {
     const { source, fun, changeType } = formItemParams;
-    console.log('🚀 source:', source, Conversion, fnMap[changeType.value]);
 
     // 数字类型 source 直接为值
     //  文本类型 source 为 [{ type: 'text , text '8'}]

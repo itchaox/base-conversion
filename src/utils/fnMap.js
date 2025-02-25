@@ -3,7 +3,7 @@
  * @Author     : Wang Chao
  * @Date       : 2024-08-19 21:34
  * @LastAuthor : Wang Chao
- * @LastTime   : 2025-02-26 00:02
+ * @LastTime   : 2025-02-26 00:05
  * @desc       :
  */
 
@@ -113,6 +113,11 @@ const Conversion = {
   // 任意时间格式 -> 时间戳(毫秒)
   DateToTimestamp: (data) => {
     return data;
+  },
+
+  // 任意时间格式 -> 时间戳(秒)
+  DateToSecond: (data) => {
+    return Math.floor(data / 1000);
   },
 };
 
