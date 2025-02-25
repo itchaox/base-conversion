@@ -199,13 +199,25 @@ basekit.addField({
     // 选了预置转换类型，则以预置转换类型为准
     let targetValue = '';
 
-    if (changeType.value !== 0) {
-      targetValue = Conversion[fnMap[changeType.value]](sourceValue);
-    } else {
-      if (typeof targetValueFun === 'function') {
-        targetValue = targetValueFun(sourceValue);
+    try {
+      if (changeType.value !== 0) {
+        targetValue = Conversion[fnMap[changeType.value]](sourceValue);
+      } else {
+        if (typeof targetValueFun === 'function') {
+          targetValue = targetValueFun(sourceValue);
+        }
       }
+    } catch (error) {
+      console.log('error', error);
     }
+
+    // FIXME 用户函数报错等，可以用此来抛出错误到单元格中，但是可能会造成没必要的运行
+    // return {
+    //   code: FieldCode.Success,
+    //   // data: String(targetValue),
+    //   data: '填写错误',
+    //   msg: '错误了！！！',
+    // };
 
     try {
       return {
